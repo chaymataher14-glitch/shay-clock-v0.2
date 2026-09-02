@@ -475,7 +475,8 @@
   }
 
 </style>
-  <link rel="icon" href="/favicon.ico?v=4" type="image/x-icon">
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/icon.png">
       </head>
 <body tabindex="0">
 
@@ -1542,7 +1543,7 @@
               showToast('Time is up! Moving to: ' + document.getElementById('p-label').textContent);
               if (Notification.permission === 'granted') {
                 try {
-                  new Notification('Time is up!', { body: 'Moving to: ' + document.getElementById('p-label').textContent, icon: '/icon.png?v=4' });
+                  new Notification('Time is up!', { body: 'Moving to: ' + document.getElementById('p-label').textContent, icon: '/icon.png' });
                 } catch(e) { console.error("Notification failed", e); }
               }
             }
@@ -1558,7 +1559,7 @@
               showToast('All sessions completed! Great job!');
               if (Notification.permission === 'granted') {
                 try {
-                  new Notification('All done!', { body: 'All Pomodoro sessions completed.', icon: '/icon.png?v=4' });
+                  new Notification('All done!', { body: 'All Pomodoro sessions completed.', icon: '/icon.png' });
                 } catch(e) { console.error("Notification failed", e); }
               }
             }
