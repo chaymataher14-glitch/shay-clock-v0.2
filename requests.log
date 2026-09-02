@@ -1,0 +1,8 @@
+GET /
+GET /@vite/client
+GET /
+GET /
+GET /
+GET /manifest.json?v=4
+GET /src/main.tsx
+GET /@vite/client

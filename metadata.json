@@ -1,0 +1,8 @@
+{
+  "name": "Remix Shay\u0027s Clock",
+  "description": "A beautiful, premium digital clock with timer and stopwatch.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

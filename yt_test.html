@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+<iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PL4fGSI1pYn2E2XkicZgA1088Oa1T3fAOC&autoplay=1&enablejsapi=1" width="500" height="300"></iframe>
+<script>
+window.addEventListener('message', e => {
+  try {
+    let data = JSON.parse(e.data);
+    if (data.event === 'infoDelivery' || data.event === 'initialDelivery') {
+      console.log(data.event, data.info);
+    }
+  } catch (e) {}
+});
+</script>
+</body>
+</html>
