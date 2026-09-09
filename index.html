@@ -48,6 +48,7 @@
     padding: 0;
     background: var(--bg);
     border-radius: calc(var(--radius));
+    color: var(--text);
     border: calc(var(--outline-width)) solid var(--accent);
     box-sizing: border-box;
     display: flex;
@@ -675,6 +676,7 @@
         </div>
 
         <div class="style-row"><label for="accent-picker">Accent Color</label><input type="color" id="accent-picker" value="#FFD5C2" oninput="setTheme('--accent', this.value)"></div>
+        <div class="style-row"><label for="accent-text-picker">Accent Text Color</label><input type="color" id="accent-text-picker" value="#E58C65" oninput="setTheme('--accent-text', this.value)"></div>
         <div class="style-row"><label for="card-picker">Card/Box Color</label><input type="color" id="card-picker" value="#E8F3F1" oninput="setTheme('--card', this.value)"></div>
         <div class="style-row"><label for="bg-picker">Background</label><input type="color" id="bg-picker" value="#FDF9F3" oninput="setTheme('--bg', this.value)"></div>
         <div class="style-row"><label for="text-picker">Text Color</label><input type="color" id="text-picker" value="#7A6F68" oninput="setTheme('--text', this.value)"></div>
@@ -1769,6 +1771,7 @@
       const settings = {
         theme: {
           accent: document.getElementById('accent-picker').value,
+          accentText: document.getElementById('accent-text-picker').value,
           card: document.getElementById('card-picker').value,
           bg: document.getElementById('bg-picker').value,
           text: document.getElementById('text-picker').value,
@@ -1856,12 +1859,14 @@
 
       if (settings.theme) {
         widget.style.setProperty('--accent', settings.theme.accent);
+        if (settings.theme.accentText) widget.style.setProperty('--accent-text', settings.theme.accentText);
         widget.style.setProperty('--card', settings.theme.card);
         widget.style.setProperty('--bg', settings.theme.bg);
         widget.style.setProperty('--text', settings.theme.text);
         widget.style.setProperty('--card-text', settings.theme.cardText);
         
         document.getElementById('accent-picker').value = settings.theme.accent;
+        if (settings.theme.accentText) document.getElementById('accent-text-picker').value = settings.theme.accentText;
         document.getElementById('card-picker').value = settings.theme.card;
         document.getElementById('bg-picker').value = settings.theme.bg;
         document.getElementById('text-picker').value = settings.theme.text;
@@ -2083,6 +2088,9 @@
 
   function applyThemePreset(theme) {
     setTheme('--accent', theme.accent);
+    let resolvedAccentText = theme.accentText || theme.text;
+    setTheme('--accent-text', resolvedAccentText);
+    document.getElementById('accent-text-picker').value = resolvedAccentText;
     setTheme('--card', theme.card);
     setTheme('--bg', theme.bg);
     setTheme('--text', theme.text);
@@ -2153,6 +2161,7 @@
     customThemes.push({
       name: name,
       accent: document.getElementById('accent-picker').value,
+          accentText: document.getElementById('accent-text-picker').value,
       card: document.getElementById('card-picker').value,
       bg: document.getElementById('bg-picker').value,
       text: document.getElementById('text-picker').value,
