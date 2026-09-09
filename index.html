@@ -75,7 +75,7 @@
 
   /* Toggle switch */
   .switch { position: relative; width: 44px; height: 26px; flex-shrink: 0; }
-  .switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .switch input { opacity: 0; pointer-events: none; width: 0; height: 0; position: absolute; }
   .switch .slider {
     position: absolute; inset: 0; background: var(--card); border-radius: 20px;
     transition: 0.2s; cursor: pointer;
@@ -129,7 +129,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    pointer-events: none;
+    
   }
   .toast {
     background: var(--accent);
@@ -139,7 +139,7 @@
     font-size: 1rem;
     font-weight: bold;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    opacity: 0;
+    opacity: 0; pointer-events: none;
     transform: translateY(20px);
     transition: opacity 0.3s, transform 0.3s;
   }
@@ -182,7 +182,7 @@
     overflow-x: hidden; 
     overflow-y: auto; 
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
-    opacity: 0; pointer-events: none; transform: translateY(20px);
+    opacity: 0; pointer-events: none;  transform: translateY(20px);
   }
   .view::before, .view::after {
     content: '';
@@ -190,13 +190,13 @@
     min-height: 0;
   }
   .view.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
-  .view.media-view { display: flex !important; pointer-events: none; transform: none !important; opacity: 0; z-index: -1; padding-top: 4%; }
+  .view.media-view { display: flex !important;  transform: none !important; opacity: 0; pointer-events: none; z-index: -1; padding-top: 4%; }
   .view.media-view.active { opacity: 1; pointer-events: auto; z-index: 10; }
 
   /* Centering wrapper for flex views to prevent top-clipping on resize */
   .view-inner { overflow: visible !important;
     flex: 0 0 auto;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
     width: 100%;
     margin: 0;
   }
@@ -239,12 +239,12 @@
   .glyph { background: none; }
   .glyph-top, .flap-top { clip-path: inset(0 0 50% 0); border-radius: var(--flip-radius, 1rem); }
   .glyph-bottom, .flap-bottom { clip-path: inset(50% 0 0 0); border-radius: var(--flip-radius, 1rem); }
-  .flap { opacity: 0; transform-origin: center; }
+  .flap { opacity: 0; pointer-events: none; transform-origin: center; }
 
   .flip-box::after {
     content: ""; position: absolute; left: 6%; right: 6%; height: 2px;
     background: rgba(0,0,0,0.08);
-    top: 50%; transform: translateY(-1px); z-index: 3; pointer-events: none; border-radius: 1px;
+    top: 50%; transform: translateY(-1px); z-index: 3;  border-radius: 1px;
   }
   .dots { font-size: calc(2rem * var(--digit-scale)); color: var(--card-text); font-weight: 700; animation: pulse 1s infinite; }
   @keyframes pulse { 50% { opacity: 0.3; } }
@@ -329,14 +329,14 @@
   }
 
   /* Media Embeds */
-  .media-container { width: 100%; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 1rem;  }
+  .media-container { width: 100%; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 0.5rem;  }
   .media-input { display: flex; gap: 10px;  flex-wrap: wrap; width: 100%; }
   .media-input input { 
     flex: 1;  border: 2px solid var(--card); padding: 12px; background: var(--bg); color: var(--text);
     border-radius: 1rem; font-family: var(--font); outline: none; box-sizing: border-box;
   }
   .iframe-area { flex: 1; background: var(--card); border-radius: 1.5rem; overflow: hidden; position: relative; min-height: 0; min-height: 50px;  }
-  iframe { position: absolute; width: 100%; height: 100%; border: none; pointer-events: none; }
+  iframe { position: absolute; width: 100%; height: 100%; border: none;  }
 
   /* Design/Style Settings */
   .style-row {
@@ -368,7 +368,7 @@
     border-bottom: 2px dashed rgba(0,0,0,0.05);
     padding-bottom: 6px;
   }
-  .theme-row { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; margin-bottom: 1rem; justify-content: flex-start; }
+  .theme-row { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; margin-bottom: 1rem; justify-content: center; }
   .theme-swatch {
     width: 32px; height: 32px; border-radius: 50%;
     border: 2px solid rgba(0,0,0,0.08); padding: 0; cursor: pointer;
@@ -431,8 +431,6 @@
     
     .media-input { flex-direction: column; align-items: stretch; }
     .media-input input, .media-input button { width: 100%; text-align: center; justify-content: center; }
-    .media-controls { display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .media-controls button { width: 100%; margin: 0; }
     
     .style-row { grid-template-columns: 1fr; align-items: start; gap: 8px; }
     .style-row select, .style-row input[type="range"] { width: 100%; justify-self: stretch; text-align: left; }
@@ -447,7 +445,6 @@
     .clock-wrap { gap: 6px; }
     .flip-box { width: calc(90px * var(--flip-scale, 1) * var(--auto-scale, 1)); }
     .view { padding: 50px 4% 4%; }
-    .media-controls { grid-template-columns: 1fr; }
   }
 
 
@@ -474,6 +471,8 @@
     flex-wrap: wrap; /* allow wrapping on extremely thin screens */
   }
 
+  .media-controls::-webkit-scrollbar { display: none; }
+  .media-controls { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/icon.png" type="image/png">
@@ -564,7 +563,7 @@
           <!-- Top Row: Input & Load -->
           <div style="display: flex; gap: 10px; width: 100%; align-items: center; flex-wrap: wrap;">
             <div style="flex: 1; position: relative; display: flex; align-items: center; min-width: 200px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 16px; opacity: 0.4; pointer-events: none;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 16px; opacity: 0.4; "><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
               <input type="text" id="m-url" style="width: 100%; text-align: left; padding: 12px 16px 12px 48px; border: none; background: var(--bg); color: var(--text); border-radius: 1rem; outline: none; transition: box-shadow 0.2s;" placeholder="Paste YouTube or media URL..." onfocus="this.style.boxShadow='0 0 0 2px var(--accent)'" onblur="this.style.boxShadow='none'" onkeydown="if(event.key==='Enter') { loadMedia(); this.blur(); }">
             </div>
             <button class="btn" onclick="loadMedia()" style="padding: 12px 24px; font-weight: 700; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">Load & Save</button>
@@ -603,7 +602,7 @@
           </div>
         </div>
 
-        <div class="media-controls" style="display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 12px; flex-wrap: wrap; background: var(--card); padding: 8px 16px; border-radius: 100px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-left: auto; margin-right: auto; max-width: fit-content; border: 1px solid rgba(128,128,128,0.1);">
+        <div class="media-controls" style="display: flex; gap: 6px; align-items: center; justify-content: flex-start; margin-top: 4px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; background: var(--card); padding: 6px 12px; border-radius: 100px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-left: auto; margin-right: auto; max-width: 100%; border: 1px solid rgba(128,128,128,0.1);">
   <button class="btn" onclick="prevPlaylist()" title="Previous Playlist (P)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg></button>
   
   <button class="btn" onclick="prevTrack()" title="Previous Track (J)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg></button>
@@ -625,8 +624,8 @@
 </div>
 
         <div id="playlist-container" style="display:flex; gap: 10px; overflow-x: auto; overflow-y: hidden; padding: 12px 4px; margin-top: 0.5rem; align-items: center;"></div>
-        <div class="iframe-area" style="box-shadow: 0 8px 32px rgba(0,0,0,0.08); border-radius: 1.5rem; flex: 1; min-height: 300px; overflow: hidden;">
-          <iframe id="player" title="YouTube player" src="about:blank" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <div class="iframe-area" style="box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-radius: 1.5rem; flex: 1 1 100px; min-height: 100px; overflow: hidden; margin-top: 4px;">
+          <iframe id="player" title="YouTube player" src="about:blank" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
         </div>
       </div></div>
     </section>
@@ -983,7 +982,7 @@
              const newPlayer = pipWindow.document.createElement('iframe');
              newPlayer.id = 'player';
              newPlayer.title = 'YouTube player';
-             newPlayer.allow = 'autoplay; encrypted-media; picture-in-picture';
+             newPlayer.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
              newPlayer.allowFullscreen = true;
              newPlayer.style.position = 'absolute';
              newPlayer.style.width = '100%';
@@ -1057,7 +1056,7 @@
              const newPlayer = document.createElement('iframe');
              newPlayer.id = 'player';
              newPlayer.title = 'YouTube player';
-             newPlayer.allow = 'autoplay; encrypted-media; picture-in-picture';
+             newPlayer.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
              newPlayer.allowFullscreen = true;
              newPlayer.style.position = 'absolute';
              newPlayer.style.width = '100%';
@@ -2273,8 +2272,22 @@
   const menuToggle = document.getElementById('menu-toggle');
 
   function toggleFS() {
-    const w = document.getElementById('mainWidget');
-    if (w) w.classList.toggle('force-fullscreen');
+    let doc = document;
+    if (window.__pipWindow) doc = window.__pipWindow.document;
+    const w = doc.getElementById('mainWidget');
+    
+    if (!doc.fullscreenElement) {
+       if (doc.documentElement.requestFullscreen) {
+           doc.documentElement.requestFullscreen().catch(err => {
+              if (w) w.classList.toggle('force-fullscreen');
+           });
+       } else {
+           if (w) w.classList.toggle('force-fullscreen');
+       }
+    } else {
+       if (doc.exitFullscreen) doc.exitFullscreen();
+       if (w) w.classList.remove('force-fullscreen');
+    }
   }
 
   function toggleMenu(evt) {
@@ -3166,6 +3179,13 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
+</script>
+<script>
+document.querySelectorAll(".media-controls, #playlist-container").forEach(c => {
+  if(c) c.addEventListener("wheel", e => {
+    if(e.deltaY !== 0) { e.preventDefault(); c.scrollLeft += (e.deltaY > 0 ? 40 : -40); }
+  }, {passive: false});
+});
 </script>
 </body>
 </html>
