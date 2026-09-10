@@ -821,6 +821,7 @@
           <div class="pomo-settings-group">
             <div class="pomo-settings-title">Phase Durations</div>
             <div class="pomo-settings-row">
+              <div class="field"><label for="r-len">Get Ready (min)</label><input type="number" id="r-len" value="0" min="0" onchange="saveSettings(); resetPomo();"></div>
               <div class="field"><label for="w-len">Work (min)</label><input type="number" id="w-len" value="25" min="1" onchange="saveSettings(); resetPomo();"></div>
               <div class="field"><label for="b-len">Short Break</label><input type="number" id="b-len" value="5" min="1" onchange="saveSettings(); resetPomo();"></div>
               <div class="field"><label for="long-break-len">Long Break</label><input type="number" id="long-break-len" value="15" min="1" onchange="saveSettings(); resetPomo();"></div>
@@ -1388,6 +1389,7 @@
 
   function getPomoSettings() {
     return {
+      r: parseInt(document.getElementById('r-len').value) || 0,
       w: parseInt(document.getElementById('w-len').value) || 25,
       b: parseInt(document.getElementById('b-len').value) || 5,
       lbLen: parseInt(document.getElementById('long-break-len').value) || 15,
@@ -1398,6 +1400,7 @@
 
   function setPhaseLabel(mode) {
     const labels = {
+      'ready': 'Get Ready',
       'work': 'Focus',
       'break': 'Break',
       'long-break': 'Long Break'
@@ -1470,9 +1473,14 @@
 
   function resetPomo() {
     const sets = getPomoSettings();
-    pMode = 'work';
+    if (sets.r > 0) {
+      pMode = 'ready';
+      pPhaseDuration = sets.r * 60;
+    } else {
+      pMode = 'work';
+      pPhaseDuration = sets.w * 60;
+    }
     sessionsCompleted = 0;
-    pPhaseDuration = sets.w * 60;
     pTimeLeft = pPhaseDuration;
     pIsRunning = false;
     clearInterval(pomoTimer);
@@ -1484,7 +1492,10 @@
 
   function skipPhase() {
     const sets = getPomoSettings();
-    if (pMode === 'work') {
+    if (pMode === 'ready') {
+      pMode = 'work';
+      pPhaseDuration = sets.w * 60;
+    } else if (pMode === 'work') {
       sessionsCompleted++;
       if (sessionsCompleted > 0 && sessionsCompleted % sets.lbEvery === 0) {
         pMode = 'long-break';
@@ -1791,6 +1802,7 @@
         ringScale: document.getElementById('ring-scale').value,
         pomoFlipMode: document.getElementById('pomo-flip-toggle').checked,
         pomo: {
+          r: document.getElementById('r-len').value,
           w: document.getElementById('w-len').value,
           b: document.getElementById('b-len').value,
           pCount: document.getElementById('p-count').value,
@@ -1917,6 +1929,7 @@
       if (settings.flipAnim !== undefined) document.getElementById('flip-anim-toggle').checked = settings.flipAnim;
       
       if (settings.pomo) {
+        if (settings.pomo.r !== undefined) document.getElementById('r-len').value = settings.pomo.r;
         document.getElementById('w-len').value = settings.pomo.w;
         document.getElementById('b-len').value = settings.pomo.b;
         document.getElementById('p-count').value = settings.pomo.pCount;
