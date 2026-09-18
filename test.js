@@ -1,3 +1,6 @@
+  var statsChart = null;
+  var currentStatsMonth = new Date();
+
   // UI Sync Trigger - Initialization
   window.__pipWindow = null;
   let savedPlaylists = [
@@ -597,6 +600,8 @@
     document.getElementById('pomo-plain').style.display = on ? 'none' : 'flex';
     document.getElementById('pomo-flip-view').style.display = on ? 'flex' : 'none';
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
 
   
@@ -683,6 +688,7 @@
         
         if (delta >= 1) {
             pTimeLeft -= delta;
+            if (pMode === 'work') logStudyTime(delta);
             lastPomoTick += delta * 1000;
         } else if (delta < 0) {
             lastPomoTick = now; // Hibernation recovery
@@ -738,6 +744,7 @@
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.side-tab').forEach(b => b.classList.remove('active'));
     document.getElementById('view-' + id).classList.add('active');
+    if (id === 'stats') renderStats();
     const btn = (evt && evt.currentTarget) || document.querySelector('.side-tab[data-tab="' + id + '"]');
     if (btn) btn.classList.add('active');
     try { saveRuntimeState(); } catch {}
@@ -890,7 +897,11 @@
       // If it was running, subtract wall-clock time elapsed since last save.
       if (s.pIsRunning && s.savedAt) {
         const elapsed = Math.floor((Date.now() - s.savedAt) / 1000);
+        const actualStudied = Math.min(elapsed, pTimeLeft);
         pTimeLeft = Math.max(0, pTimeLeft - elapsed);
+        if (pMode === 'work' && actualStudied > 0) {
+            logStudyTime(actualStudied);
+        }
       }
       updatePomoUI();
       if (s.pIsRunning && pTimeLeft > 0) {
@@ -1121,40 +1132,56 @@
         showToast("This browser does not support desktop notifications.");
         document.getElementById('notify-toggle').checked = false;
         saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
         return;
       }
       if (Notification.permission === "granted") {
         showToast("Desktop notifications enabled.");
         saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
       } else if (Notification.permission !== "denied") {
         try {
           Notification.requestPermission().then((permission) => {
             if (permission === "granted") {
               showToast("Desktop notifications enabled.");
               saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
             } else {
               showToast("Notification permission denied.");
               document.getElementById('notify-toggle').checked = false;
               saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
             }
           }).catch(err => {
             showToast("Notifications blocked. Try opening widget in a new tab.");
             document.getElementById('notify-toggle').checked = false;
             saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
           });
         } catch(e) {
           showToast("Notifications blocked. Try opening widget in a new tab.");
           document.getElementById('notify-toggle').checked = false;
           saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
         }
       } else {
         showToast("Notifications are blocked in your browser settings.");
         document.getElementById('notify-toggle').checked = false;
         saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
       }
     } else {
       showToast("Desktop notifications disabled.");
       saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
     }
   }
 
@@ -1192,34 +1219,48 @@
     widget.style.setProperty(prop, val);
     updatePipVars();
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
   function setFont(val) {
     widget.style.setProperty('--font', val);
     updatePipVars();
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
   function setRingScale(val) {
     widget.style.setProperty('--ring-scale', val);
     updatePipVars();
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
   function setOutlineWidth(val) {
     widget.style.setProperty('--outline-width', val + 'px');
     updatePipVars();
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
   function setShadowOpacity(val) {
     widget.style.setProperty('--shadow-opacity', val);
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
   function setDigitScale(val) {
     widget.style.setProperty('--digit-scale', val);
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
   function setFlipVar(prop, val) {
     if(prop === '--flip-radius') val += 'rem';
     widget.style.setProperty(prop, val);
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
 
   // Expanded Theme Collection (Including elegant darker modes & distinct palettes)
@@ -1295,6 +1336,8 @@
         e.stopPropagation();
         customThemes = customThemes.filter(t => t.name !== theme.name || t.accent !== theme.accent);
         saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
         renderCustomThemes();
       };
       wrap.appendChild(del);
@@ -1328,11 +1371,15 @@
     });
     renderCustomThemes();
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
 
   function toggleDate(on) {
     document.getElementById('date-label').style.display = on ? 'block' : 'none';
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
 
   let is12Hour = true;
@@ -1341,6 +1388,8 @@
     document.getElementById('ampm').style.display = on ? 'block' : 'none';
     updateClock(true);
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
 
   let enableFlipAnim = true;
@@ -1493,16 +1542,22 @@
       }
     }
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
 
   function setQuoteCategory(cat) {
     rotateQuote();
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
 
   function toggleFlipAnim(on) {
     enableFlipAnim = on;
     saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
   }
 
   // Sidebar toggle behavior
@@ -1761,6 +1816,8 @@
       savedPlaylists.push({ url, name: title });
       currentPlaylistIndex = savedPlaylists.length - 1;
       saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
       renderPlaylists();
     renderPlaylist();
       if (document.getElementById('new-saved-url')) document.getElementById('new-saved-url').value = '';
@@ -1776,6 +1833,8 @@
       savedPlaylists.push({ url, name: title });
       currentPlaylistIndex = savedPlaylists.length - 1;
       saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
       renderPlaylists();
       renderPlaylist();
       showToast('URL saved to your Web Playlist!');
@@ -1898,6 +1957,8 @@
       savedPlaylists.push({ url, name: title });
       currentPlaylistIndex = savedPlaylists.length - 1;
       saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
       renderPlaylists();
     } else {
       currentPlaylistIndex = existingIndex;
@@ -2069,6 +2130,8 @@
         else if (fromIndex < currentPlaylistIndex && index >= currentPlaylistIndex) currentPlaylistIndex--;
         else if (fromIndex > currentPlaylistIndex && index <= currentPlaylistIndex) currentPlaylistIndex++;
         saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
         renderPlaylists();
     renderPlaylist();
       };
@@ -2085,6 +2148,8 @@
       autoCheckbox.onchange = (e) => {
         savedPlaylists[index].autoplay = e.target.checked;
         saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
       };
       
       const playBtn = document.createElement('button');
@@ -2109,6 +2174,8 @@
       nameInput.onchange = (e) => {
         savedPlaylists[index].name = e.target.value;
         saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
         renderPlaylist();
       };
       
@@ -2121,6 +2188,8 @@
         savedPlaylists.splice(index, 1);
         if (currentPlaylistIndex >= savedPlaylists.length) currentPlaylistIndex = Math.max(0, savedPlaylists.length - 1);
         saveSettings();
+    const view = document.getElementById('view-stats');
+    if (view && view.classList.contains('active')) renderStats();
         renderPlaylists();
     renderPlaylist();
       };
@@ -2215,13 +2284,188 @@
   function autoPrevMedia() { prevTrack(); }
 
   
+  
+  // --- STATS SYSTEM ---
+
+  function logStudyTime(seconds) {
+      if (seconds <= 0) return;
+      const key = STORAGE_KEY + '_stats';
+      let stats = JSON.parse(localStorage.getItem(key) || '{}');
+      let d = new Date();
+      let dateString = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      
+      if (!stats[dateString]) stats[dateString] = 0;
+      stats[dateString] += seconds;
+      localStorage.setItem(key, JSON.stringify(stats));
+      
+      const view = document.getElementById('view-stats');
+      if (view && view.classList.contains('active')) {
+          renderStats();
+      }
+  }
+
+  function formatTime(seconds) {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      return h + 'h ' + m + 'm';
+  }
+
+  function changeStatsMonth(delta) {
+      currentStatsMonth.setMonth(currentStatsMonth.getMonth() + delta);
+      renderStats();
+  }
+
+  function renderStats() {
+      const key = STORAGE_KEY + '_stats';
+      let stats = JSON.parse(localStorage.getItem(key) || '{}');
+      
+      let d = new Date();
+      let todayStr = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      
+      let todaySeconds = stats[todayStr] || 0;
+      let hdr = document.getElementById('stats-header');
+      if(hdr) hdr.textContent = formatTime(todaySeconds);
+      
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const y = currentStatsMonth.getFullYear();
+      const m = currentStatsMonth.getMonth();
+      let mlbl = document.getElementById('stats-month-label');
+      if(mlbl) mlbl.textContent = monthNames[m] + ' ' + y;
+      
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      const labels = [];
+      const data = [];
+      let totalSecondsThisMonth = 0;
+      let daysStudied = 0;
+      
+      for(let i=1; i<=daysInMonth; i++) {
+          labels.push(i);
+          let dateStr = y + '-' + String(m+1).padStart(2, '0') + '-' + String(i).padStart(2, '0');
+          let s = stats[dateStr] || 0;
+          totalSecondsThisMonth += s;
+          if(s > 0) daysStudied++;
+          data.push(s / 3600); // in hours for chart
+      }
+      
+      let tlbl = document.getElementById('stats-total-month');
+      if(tlbl) tlbl.textContent = formatTime(totalSecondsThisMonth);
+      
+      let avg = daysStudied > 0 ? Math.floor(totalSecondsThisMonth / daysStudied) : 0;
+      let albl = document.getElementById('stats-avg-month');
+      if(albl) albl.textContent = formatTime(avg);
+      
+      updateChart(labels, data);
+  }
+
+  function updateChart(labels, data) {
+      const canvas = document.getElementById('statsChart');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      
+      const rawAccent = getComputedStyle(document.body).getPropertyValue('--accent').trim();
+      const accent = rawAccent.startsWith('#') ? rawAccent : (rawAccent || '#FF7B90');
+      const text = getComputedStyle(document.body).getPropertyValue('--text').trim() || '#333333';
+      const fontFam = getComputedStyle(document.body).getPropertyValue('--font').trim() || 'inherit';
+
+      // Create a nice vertical gradient for the line fill
+      let gradient = ctx.createLinearGradient(0, 0, 0, 250);
+      gradient.addColorStop(0, accent + '66'); // 40% opacity
+      gradient.addColorStop(1, accent + '00'); // 0% opacity
+
+      if (statsChart) {
+          statsChart.data.labels = labels;
+          statsChart.data.datasets[0].data = data;
+          statsChart.data.datasets[0].borderColor = accent;
+          statsChart.data.datasets[0].backgroundColor = gradient;
+          statsChart.data.datasets[0].pointBackgroundColor = accent;
+          statsChart.data.datasets[0].pointHoverBackgroundColor = accent;
+          statsChart.options.scales.x.ticks.color = text;
+          statsChart.options.scales.y.ticks.color = text;
+          statsChart.update();
+      } else {
+          if(typeof Chart === 'undefined') return;
+          Chart.defaults.font.family = fontFam;
+          
+          statsChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: labels,
+                  datasets: [{
+                      label: 'Hours Studied',
+                      data: data,
+                      borderColor: accent,
+                      backgroundColor: gradient,
+                      borderWidth: 3,
+                      fill: true,
+                      tension: 0.4, // smooth curves
+                      pointBackgroundColor: accent,
+                      pointBorderColor: '#fff',
+                      pointBorderWidth: 2,
+                      pointRadius: 0, // hide points by default for a cleaner look
+                      pointHoverRadius: 6, // show them big on hover
+                      pointHoverBackgroundColor: accent,
+                      pointHoverBorderColor: '#fff',
+                      pointHoverBorderWidth: 2,
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  interaction: {
+                      mode: 'index', // makes hovering easier (don't have to be exact on the point)
+                      intersect: false,
+                  },
+                  plugins: {
+                      legend: { display: false },
+                      tooltip: {
+                          backgroundColor: 'rgba(0,0,0,0.85)',
+                          titleColor: '#fff',
+                          bodyColor: '#fff',
+                          titleFont: { size: 13, weight: 'bold' },
+                          bodyFont: { size: 14, weight: 'bold' },
+                          padding: 12,
+                          cornerRadius: 12,
+                          displayColors: false,
+                          callbacks: {
+                              title: function(context) {
+                                  return 'Day ' + context[0].label;
+                              },
+                              label: function(context) {
+                                  let val = context.parsed.y;
+                                  if (val === 0) return '0h 0m';
+                                  let h = Math.floor(val);
+                                  let m = Math.floor((val - h) * 60);
+                                  return h + 'h ' + m + 'm';
+                              }
+                          }
+                      }
+                  },
+                  scales: {
+                      x: {
+                          ticks: { color: text, maxTicksLimit: 10, padding: 10 },
+                          grid: { display: false },
+                          border: { display: false }
+                      },
+                      y: {
+                          ticks: { color: text, maxTicksLimit: 5, padding: 10 },
+                          grid: { color: 'rgba(128,128,128,0.1)', drawBorder: false },
+                          border: { display: false },
+                          beginAtZero: true,
+                          suggestedMax: 1
+                      }
+                  }
+              }
+          });
+      }
+  }
+
   // --- UNIFIED NAVIGATION SYSTEM ---
   function goToNextMedia() {
     let q = getMacroQueue();
     if (q.length === 0) return;
     let curr = getCurrentMacroIndex(q);
     let next = curr + 1;
-    if (next >= q.length) return; // Rule 5: boundary limit
+    if (next >= q.length) next = 0; // wrap around
     playMacroItem(next, q, 1);
   }
 
@@ -2230,7 +2474,7 @@
     if (q.length === 0) return;
     let curr = getCurrentMacroIndex(q);
     let prev = curr - 1;
-    if (prev < 0) return; // Rule 5: boundary limit
+    if (prev < 0) prev = q.length - 1; // wrap around
     playMacroItem(prev, q, -1);
   }
 
