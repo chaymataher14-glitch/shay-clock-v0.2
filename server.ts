@@ -28,6 +28,18 @@ async function startServer() {
     }
   });
 
+  app.get(['/favicon.ico', '/shay-favicon.ico'], (req, res) => {
+    res.setHeader('Content-Type', 'image/x-icon');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.sendFile(path.join(process.cwd(), 'public', 'shay-favicon.ico'));
+  });
+
+  app.get('/shay-icon.png', (req, res) => {
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.sendFile(path.join(process.cwd(), 'public', 'shay-icon.png'));
+  });
+
   app.get('*', (req, res, next) => {
     if (req.path.match(/\.(js|jsx|ts|tsx)$/) && req.path !== '/sw.js') {
       const filePath = path.join(process.cwd(), req.path);
