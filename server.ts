@@ -28,16 +28,17 @@ async function startServer() {
     }
   });
 
+  // Serve static files from public directory (icons, manifests, etc.)
+  app.use(express.static(path.join(process.cwd(), 'public'), {
+    maxAge: '1d',
+    setHeaders: (res, path) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    }
+  }));
+
   app.get(['/favicon.ico', '/shay-favicon.ico'], (req, res) => {
     res.setHeader('Content-Type', 'image/x-icon');
-    res.setHeader('Cache-Control', 'public, max-age=86400');
-    res.sendFile(path.join(process.cwd(), 'public', 'shay-favicon.ico'));
-  });
-
-  app.get('/shay-icon.png', (req, res) => {
-    res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Cache-Control', 'public, max-age=86400');
-    res.sendFile(path.join(process.cwd(), 'public', 'shay-icon.png'));
+    res.sendFile(path.join(process.cwd(), 'public', 'favicon.ico'));
   });
 
   app.get('*', (req, res, next) => {

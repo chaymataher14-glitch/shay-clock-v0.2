@@ -1,21 +1,39 @@
-self.addEventListener('install', (e) => {
-  self.skipWaiting();
-});
+const CACHE_NAME = 'shay-clock-v1';
+const ASSETS = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/favicon.ico',
+  '/shay-icon.png',
+  '/apple-touch-icon.png',
+  '/icon-192.png',
+  '/icon-512.png'
+];
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => caches.delete(cacheName))
-      );
-    }).then(() => {
-      return self.clients.claim();
-    }).then(() => {
-      self.registration.unregister();
+self.addEventListener('install', (event) => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS).catch((err) => console.log('SW cache err:', err));
     })
   );
 });
 
-self.addEventListener('fetch', (e) => {
-  // Pass through all requests
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) return caches.delete(key);
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  // Let network handle by default, fall back to cache
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
 });
