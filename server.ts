@@ -28,6 +28,12 @@ async function startServer() {
     }
   });
 
+  app.get('/manifest.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.sendFile(path.join(process.cwd(), 'public', 'manifest.json'));
+  });
+
   // Serve static files from public directory (icons, manifests, etc.)
   app.use(express.static(path.join(process.cwd(), 'public'), {
     maxAge: '1d',
@@ -36,7 +42,7 @@ async function startServer() {
     }
   }));
 
-  app.get(['/favicon.ico', '/shay-favicon.ico'], (req, res) => {
+  app.get(['/favicon.ico', '/shay-favicon.ico', '/shay-icon.ico', '/desktop-icon.ico'], (req, res) => {
     res.setHeader('Content-Type', 'image/x-icon');
     res.sendFile(path.join(process.cwd(), 'public', 'favicon.ico'));
   });
