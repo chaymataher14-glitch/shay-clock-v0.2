@@ -670,24 +670,24 @@
         </div>
 
         <div class="media-controls" style="display: flex; gap: 6px; align-items: center; justify-content: flex-start; margin-top: 4px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; background: var(--card); padding: 6px 12px; border-radius: 100px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-left: auto; margin-right: auto; max-width: 100%; border: 1px solid rgba(128,128,128,0.1);">
-  <button class="btn" onclick="prevPlaylist()" title="Previous Playlist (P)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg></button>
+  <button class="btn" onclick="prevPlaylist(); this.blur();" title="Previous Playlist (P)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg></button>
   
-  <button class="btn" onclick="prevTrack()" title="Previous Track (J)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg></button>
+  <button class="btn" onclick="prevTrack(); this.blur();" title="Previous Track (J)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg></button>
   
-  <button class="btn" onclick="togglePlayMedia()" title="Play / Pause (X)" style="padding: 10px 24px; border-radius: 100px; background: var(--accent); color: var(--accent-text); font-weight: 700; display: flex; align-items: center; gap: 6px;">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-    Play / Pause
+  <button class="btn" id="media-play-btn" onclick="togglePlayMedia(); this.blur();" title="Play / Pause (X / Space)" style="padding: 10px 24px; border-radius: 100px; background: var(--accent); color: var(--accent-text); font-weight: 700; display: flex; align-items: center; gap: 6px;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    Play
   </button>
   
-  <button class="btn" onclick="toggleMuteMedia()" title="Mute / Unmute (V)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg></button>
+  <button class="btn" id="media-mute-btn" onclick="toggleMuteMedia(); this.blur();" title="Mute / Unmute (V)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg></button>
   
-  <button class="btn" onclick="nextTrack()" title="Next Track (K)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg></button>
+  <button class="btn" onclick="nextTrack(); this.blur();" title="Next Track (K)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg></button>
   
-  <button class="btn" onclick="nextPlaylist()" title="Next Playlist (N)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg></button>
+  <button class="btn" onclick="nextPlaylist(); this.blur();" title="Next Playlist (N)" style="padding: 8px; border-radius: 50%; background: transparent; color: var(--text); opacity: 0.7; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(128,128,128,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg></button>
   
   <div style="width: 1px; height: 24px; background: rgba(128,128,128,0.2); margin: 0 4px;"></div>
   
-  <button class="btn" onclick="stopMedia()" title="Close Media (C)" style="padding: 8px; border-radius: 50%; background: transparent; color: #ff4444; opacity: 0.8; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255,68,68,0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+  <button class="btn" onclick="stopMedia(); this.blur();" title="Close Media (C)" style="padding: 8px; border-radius: 50%; background: transparent; color: #ff4444; opacity: 0.8; box-shadow: none;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255,68,68,0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
 </div>
 
         <div id="playlist-container" style="display:flex; gap: 10px; overflow-x: auto; overflow-y: hidden; padding: 12px 4px; margin-top: 0.5rem; align-items: center;"></div>
@@ -710,24 +710,6 @@
         <div style="width: 100%; display:flex; gap: 8px;">
            <input type="text" id="unique-url-box" readonly style="flex: 1; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); font-size: 0.95rem; background: var(--bg); color: var(--text);" onclick="this.select()">
            <button class="btn" onclick="copyUniqueUrl(this)" style="background: var(--accent); color: var(--accent-text); border-radius: 8px; padding: 8px 16px; font-size: 0.95rem;">Copy</button>
-        </div>
-      </div>
-
-      <div class="section-group">
-        <div class="section-label">Desktop App & Icon</div>
-        <div style="width: 100%; display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
-          <img src="/icon-192.png" alt="app logo" style="width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1)); background: transparent;" />
-          <div style="flex: 1; font-size: 0.88rem; line-height: 1.4; color: var(--text);">
-            Use <b>shay's clock</b> directly on your Windows or Mac desktop with full transparent artwork.
-          </div>
-        </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 8px; width: 100%; margin-bottom: 8px;">
-          <button class="btn" onclick="triggerPwaInstall()" style="background: var(--accent); color: var(--accent-text); border-radius: 8px; padding: 8px 14px; font-size: 0.88rem; font-weight: 600;">Install App to Desktop ⇩</button>
-          <a href="/shay-icon.ico" download="shay-clock-icon.ico" class="btn" style="text-decoration: none; background: rgba(0,0,0,0.06); color: var(--text); border-radius: 8px; padding: 8px 12px; font-size: 0.85rem; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">💾 Download .ICO</a>
-          <a href="/icon-512.png" download="shay-clock-transparent.png" class="btn" style="text-decoration: none; background: rgba(0,0,0,0.06); color: var(--text); border-radius: 8px; padding: 8px 12px; font-size: 0.85rem; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">🖼️ Download .PNG</a>
-        </div>
-        <div style="width: 100%; font-size: 0.78rem; opacity: 0.8; line-height: 1.4; background: rgba(0,0,0,0.02); padding: 8px 10px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05);">
-          💡 <i>Shortcut still white on Windows?</i> Windows caches old shortcut icons forever. Right-click desktop shortcut &rarr; <b>Properties</b> &rarr; <b>Change Icon...</b> &rarr; select the downloaded <code>shay-clock-icon.ico</code>.
         </div>
       </div>
 
@@ -1004,39 +986,54 @@
   let isYtMuted = false;
   
   window.addEventListener('message', (event) => {
-    if (event.origin !== 'https://www.youtube.com') return;
+    if (!event.origin || (!event.origin.includes('youtube.com') && !event.origin.includes('youtube-nocookie.com'))) return;
     try {
-        const data = JSON.parse(event.data);
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (!data) return;
         if (data.event === 'infoDelivery' && data.info) {
             if (data.info.playlistIndex !== undefined) window.ytPlaylistIndex = data.info.playlistIndex;
-            if (data.info.playlist !== undefined) {
+            if (data.info.playlist !== undefined && Array.isArray(data.info.playlist)) {
                 window.ytPlaylistLength = data.info.playlist.length;
                 if (window.playLastYtTrackOnLoad && window.ytPlaylistLength > 1) {
                     window.playLastYtTrackOnLoad = false;
                     let target = window.ytPlaylistLength - 1;
-                    if (window.ytPlaylistIndex !== target) {
+                    if (window.ytPlaylistIndex !== target && event.source) {
                         event.source.postMessage(JSON.stringify({event: 'command', func: 'playVideoAt', args: [target]}), '*');
                     }
                 }
             }
             
             if (data.info.playerState !== undefined) {
-                isYtPlaying = (data.info.playerState === 1 || data.info.playerState === 3);
-                if (data.info.muted !== undefined) isYtMuted = data.info.muted;
+                // 1 = playing, 2 = paused, 3 = buffering, 0 = ended, -1 = unstarted
+                if (data.info.playerState === 1 || data.info.playerState === 3) {
+                    isYtPlaying = true;
+                } else if (data.info.playerState === 2 || data.info.playerState === 0) {
+                    isYtPlaying = false;
+                }
+                if (typeof updateMediaControlsUI === 'function') updateMediaControlsUI();
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.playbackState = isYtPlaying ? 'playing' : 'paused';
+                }
                 if (data.info.playerState === 0) {
-                    // Video ended
-                    if (window.ytPlaylistLength > 1) {
-                        if (window.ytPlaylistIndex >= window.ytPlaylistLength - 1) {
-                            nextPlaylist(); // Reached end of YT playlist, spill over to next Macro item
-                        }
+                    // Video ended: advance
+                    if (window.ytPlaylistLength > 1 && window.ytPlaylistIndex < window.ytPlaylistLength - 1) {
+                        goToNextItem();
                     } else {
-                        nextPlaylist(); // Single video ended, spill over
+                        goToNextMedia();
                     }
                 }
             }
+            if (data.info.muted !== undefined) {
+                isYtMuted = !!data.info.muted;
+                if (typeof updateMediaControlsUI === 'function') updateMediaControlsUI();
+            }
         }
-        if (data.event === 'initialDelivery') {
-            if (data.info.muted !== undefined) isYtMuted = data.info.muted;
+        if (data.event === 'initialDelivery' && data.info) {
+            if (data.info.muted !== undefined) isYtMuted = !!data.info.muted;
+            if (data.info.playerState !== undefined) {
+                isYtPlaying = (data.info.playerState === 1 || data.info.playerState === 3);
+            }
+            if (typeof updateMediaControlsUI === 'function') updateMediaControlsUI();
         }
     } catch (e) {}
   });
@@ -2607,8 +2604,15 @@
     const t = e.target;
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
 
-    if (t && (t.tagName === 'BUTTON' || t.tagName === 'A' || t.getAttribute('role') === 'button') && (e.key === 'Enter' || e.key === ' ')) {
-      return; // Let native click happen
+    // Allow Enter on buttons/links to activate them normally
+    if (t && (t.tagName === 'BUTTON' || t.tagName === 'A' || t.getAttribute('role') === 'button')) {
+      if (e.key === 'Enter') {
+        return; // Let native button click happen
+      }
+      // If Space is pressed, do NOT trigger the random button that had focus; blur it and toggle media/pomo
+      if (e.key === ' ' || e.code === 'Space') {
+        t.blur();
+      }
     }
 
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
@@ -2639,58 +2643,89 @@
     if (e.key === 'Shift') {
       const sidebar = document.getElementById('sidebar');
       const menuToggle = document.getElementById('menu-toggle');
-      if (sidebar.classList.contains('open')) {
+      if (sidebar && sidebar.classList.contains('open')) {
         sidebar.classList.remove('open');
         sidebar.setAttribute('aria-hidden', 'true');
-        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle?.setAttribute('aria-expanded', 'false');
       }
       return;
     }
 
-    if (e.key === ' ' || e.key === 'Enter') {
+    const k = (e.key || '').toLowerCase();
+    const code = e.code || '';
+
+    // X key or physical MediaPlayPause key: ALWAYS controls media
+    if (k === 'x' || code === 'KeyX' || k === 'mediaplaypause') {
       e.preventDefault();
-      if (document.getElementById('view-pomo').classList.contains('active')) {
+      togglePlayMedia();
+      return;
+    }
+
+    // Space or Enter: Contextual start/pause (Pomo if on pomo view, Media if on media view)
+    if (k === ' ' || code === 'Space' || e.key === 'Enter') {
+      e.preventDefault();
+      if (document.getElementById('view-pomo')?.classList.contains('active')) {
         const pStartBtn = document.getElementById('p-start');
         if (pStartBtn) pStartBtn.click();
-      } else {
+      } else if (document.getElementById('view-media')?.classList.contains('active')) {
         togglePlayMedia();
+      } else {
+        if (isYtPlaying || (localPlayer && !localPlayer.paused)) {
+          togglePlayMedia();
+        } else {
+          const pStartBtn = document.getElementById('p-start');
+          if (pStartBtn) pStartBtn.click();
+        }
       }
-    } else if (e.key === 'r' || e.key === 'R') {
-      if (document.getElementById('view-pomo').classList.contains('active')) {
+      return;
+    }
+
+    if (k === 'r' || code === 'KeyR') {
+      if (document.getElementById('view-pomo')?.classList.contains('active')) {
         resetPomo();
       }
-    } else if (e.key === 's' || e.key === 'S') {
-      if (document.getElementById('view-pomo').classList.contains('active')) {
+    } else if (k === 's' || code === 'KeyS') {
+      if (document.getElementById('view-pomo')?.classList.contains('active')) {
         skipPhase();
       }
-    } else if (e.key === 'f' || e.key === 'F') {
+    } else if (k === 'f' || code === 'KeyF') {
+      e.preventDefault();
       toggleFS();
-    } else if (e.key === 'm' || e.key === 'M') {
+    } else if (k === 'm' || code === 'KeyM') {
+      e.preventDefault();
       toggleMenu({ stopPropagation: function(){} });
-    } else if (e.key === 'v' || e.key === 'V') {
+    } else if (k === 'v' || code === 'KeyV') {
+      e.preventDefault();
       toggleMuteMedia();
-    } else if (e.key === 'x' || e.key === 'X') {
-      togglePlayMedia();
-    } else if (e.key === 'l' || e.key === 'L') {
+    } else if (k === 'l' || code === 'KeyL') {
+      e.preventDefault();
       startMedia();
-    } else if (e.key === 'c' || e.key === 'C') {
+    } else if (k === 'c' || code === 'KeyC' || k === 'mediastop') {
+      e.preventDefault();
       stopMedia();
-    } else if (e.key === 'p' || e.key === 'P') {
+    } else if (k === 'p' || code === 'KeyP') {
+      e.preventDefault();
       goToPreviousMedia();
-    } else if (e.key === 'n' || e.key === 'N') {
+    } else if (k === 'n' || code === 'KeyN') {
+      e.preventDefault();
       goToNextMedia();
-    } else if (e.key === 'j' || e.key === 'J') {
+    } else if (k === 'j' || code === 'KeyJ' || k === 'mediatrackprevious') {
+      e.preventDefault();
       goToPreviousItem();
-    } else if (e.key === 'k' || e.key === 'K') {
+    } else if (k === 'k' || code === 'KeyK' || k === 'mediatracknext') {
+      e.preventDefault();
       goToNextItem();
     }
   });
   
   if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('previoustrack', prevTrack);
-    navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
-    navigator.mediaSession.setActionHandler('play', togglePlayMedia);
-    navigator.mediaSession.setActionHandler('pause', togglePlayMedia);
+    try {
+      navigator.mediaSession.setActionHandler('previoustrack', () => goToPreviousItem());
+      navigator.mediaSession.setActionHandler('nexttrack', () => goToNextItem());
+      navigator.mediaSession.setActionHandler('play', () => { if (!isYtPlaying) togglePlayMedia(); });
+      navigator.mediaSession.setActionHandler('pause', () => { if (isYtPlaying) togglePlayMedia(); });
+      navigator.mediaSession.setActionHandler('stop', () => stopMedia());
+    } catch(e) {}
   }
 
   document.addEventListener('keydown', (e) => {
@@ -2706,10 +2741,26 @@
     }
   });
   
-  // Ensure the iframe has focus for keyboard shortcuts when clicked anywhere
+  // Ensure the widget window regains focus for keyboard shortcuts when hovering or clicking
+  window.addEventListener('mousemove', () => {
+    if (document.activeElement && document.activeElement.tagName === 'IFRAME') {
+      window.focus();
+    }
+  }, { passive: true });
+
+  window.addEventListener('pointerenter', () => {
+    if (document.activeElement && document.activeElement.tagName === 'IFRAME') {
+      window.focus();
+    }
+  });
+
   document.addEventListener('click', (e) => {
     const t = e.target;
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.tagName === 'OPTION' || t.tagName === 'LABEL')) return;
+    if (t && (t.tagName === 'BUTTON' || t.closest('button'))) {
+      const btn = t.tagName === 'BUTTON' ? t : t.closest('button');
+      if (btn) setTimeout(() => btn.blur(), 50);
+    }
     if (!document.hasFocus()) window.focus();
   });
   
@@ -2866,9 +2917,9 @@
     if (!q) q = getMacroQueue();
     if (q.length === 0) return;
     
-    // Bounds clamping, do NOT wrap around.
-    if (mIndex >= q.length) return;
-    if (mIndex < 0) return;
+    // Bounds clamping, wrap around for continuous cycling
+    if (mIndex >= q.length) mIndex = 0;
+    if (mIndex < 0) mIndex = q.length - 1;
 
     let item = q[mIndex];
     let currentIdx = getCurrentMacroIndex(q);
@@ -2885,9 +2936,8 @@
              let targetIdx = (direction === -1) ? window.ytPlaylistLength - 1 : 0;
              iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'playVideoAt', args: [targetIdx]}), '*');
           } else {
-             let oldSrc = iframe.src;
-             iframe.src = '';
-             setTimeout(() => { iframe.src = oldSrc; }, 50);
+             iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'seekTo', args: [0, true]}), '*');
+             iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'playVideo', args: []}), '*');
           }
         }
       }
@@ -2960,6 +3010,7 @@
     renderPlaylist();
 
     const iframe = document.getElementById('player');
+    const originParam = `&origin=${encodeURIComponent(window.location.origin)}`;
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
       let videoId = '';
       let listId = '';
@@ -2970,15 +3021,26 @@
       if (url.includes('list=')) listId = url.split('list=')[1].split('&')[0];
       
       let finalSrc = '';
-      // If we have both, prefer the playlist URL so it doesn't get hard-locked to one specific video index
       if (listId) {
-        finalSrc = `https://www.youtube.com/embed/videoseries?list=${listId}&autoplay=1&enablejsapi=1`;
+        finalSrc = `https://www.youtube.com/embed/videoseries?list=${listId}&autoplay=1&enablejsapi=1${originParam}`;
       } else if (videoId) {
-        finalSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
+        finalSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1${originParam}`;
       }
       
       if (finalSrc) {
-        iframe.src = finalSrc;
+        if (iframe.src === finalSrc) {
+          iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'playVideo', args: []}), '*');
+        } else {
+          iframe.onload = () => {
+            try {
+              iframe.contentWindow.postMessage(JSON.stringify({event: 'listening'}), '*');
+              iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'playVideo', args: []}), '*');
+            } catch (e) {}
+          };
+          iframe.src = finalSrc;
+        }
+        isYtPlaying = true;
+        updateMediaControlsUI();
         if (localPlayer) { localPlayer.pause(); localPlayer.style.display = 'none'; }
         iframe.style.display = 'block';
       } else {
@@ -3214,57 +3276,140 @@
       localPlayer.controls = true;
       localPlayer.autoplay = true;
       localPlayer.onended = nextTrack;
+      localPlayer.onplay = () => updateMediaControlsUI();
+      localPlayer.onpause = () => updateMediaControlsUI();
       document.querySelector('.iframe-area').appendChild(localPlayer);
     }
     
     localPlayer.style.display = 'block';
     localPlayer.src = mediaFiles[index].url;
     localPlayer.play().catch(e => { console.log('Auto-play prevented', e); showToast('Auto-play blocked. Please click play.'); });
+    updateMediaControlsUI();
   }
-    
-    
 
-  function togglePlayMedia() {
-    if (localPlayer && localPlayer.style.display !== 'none') {
-      if (localPlayer.paused) localPlayer.play();
-      else localPlayer.pause();
-    } else {
-      const iframe = document.getElementById('player');
-      if (iframe && (iframe.src.includes('youtube.com') || iframe.src.includes('youtu.be'))) {
-        isYtPlaying = !isYtPlaying;
-        const cmd = isYtPlaying ? 'playVideo' : 'pauseVideo';
-        iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: cmd, args: []}), '*');
+  function updateMediaControlsUI() {
+    const playBtn = document.getElementById('media-play-btn');
+    const isPlaying = (localPlayer && localPlayer.style.display !== 'none' && !localPlayer.paused) || isYtPlaying;
+    if (playBtn) {
+      if (isPlaying) {
+        playBtn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+          Pause
+        `;
+        playBtn.setAttribute('title', 'Pause (X / Space)');
+      } else {
+        playBtn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          Play
+        `;
+        playBtn.setAttribute('title', 'Play (X / Space)');
+      }
+    }
+
+    const muteBtn = document.getElementById('media-mute-btn');
+    const isMuted = (localPlayer && localPlayer.style.display !== 'none' && localPlayer.muted) || isYtMuted;
+    if (muteBtn) {
+      if (isMuted) {
+        muteBtn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        `;
+        muteBtn.style.color = '#ff6b6b';
+        muteBtn.style.opacity = '1';
+        muteBtn.setAttribute('title', 'Unmute (V)');
+      } else {
+        muteBtn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+        `;
+        muteBtn.style.color = 'var(--text)';
+        muteBtn.style.opacity = '0.7';
+        muteBtn.setAttribute('title', 'Mute (V)');
       }
     }
   }
 
+  function togglePlayMedia() {
+    const iframe = document.getElementById('player');
+    const hasLocal = localPlayer && localPlayer.style.display !== 'none' && localPlayer.src;
+    const hasYt = iframe && (iframe.src.includes('youtube.com') || iframe.src.includes('youtu.be'));
+
+    if (hasLocal) {
+      if (localPlayer.paused) {
+        localPlayer.play();
+      } else {
+        localPlayer.pause();
+      }
+      updateMediaControlsUI();
+      return;
+    }
+
+    if (hasYt) {
+      isYtPlaying = !isYtPlaying;
+      const cmd = isYtPlaying ? 'playVideo' : 'pauseVideo';
+      iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: cmd, args: []}), '*');
+      updateMediaControlsUI();
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = isYtPlaying ? 'playing' : 'paused';
+      }
+      return;
+    }
+
+    startMedia();
+  }
+
   function startMedia() {
     loadMedia();
-    togglePlayMedia();
+    setTimeout(() => {
+      togglePlayMedia();
+    }, 150);
   }
 
   function stopMedia() {
     const iframe = document.getElementById('player');
-    iframe.src = 'about:blank';
+    if (iframe) iframe.src = 'about:blank';
     if (localPlayer) {
       localPlayer.pause();
       localPlayer.src = '';
       localPlayer.style.display = 'none';
     }
     mediaFiles = [];
+    isYtPlaying = false;
+    updateMediaControlsUI();
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.playbackState = 'none';
+    }
     renderPlaylist();
+    showToast('Media closed');
   }
 
   function toggleMuteMedia() {
-    if (localPlayer && localPlayer.style.display !== 'none') {
+    const iframe = document.getElementById('player');
+    const hasLocal = localPlayer && localPlayer.style.display !== 'none';
+    if (hasLocal) {
       localPlayer.muted = !localPlayer.muted;
-    } else {
-      const iframe = document.getElementById('player');
-      if (iframe && (iframe.src.includes('youtube.com') || iframe.src.includes('youtu.be'))) {
-        isYtMuted = !isYtMuted;
-        const cmd = isYtMuted ? 'mute' : 'unMute';
-        iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: cmd, args: []}), '*');
-      }
+      updateMediaControlsUI();
+      showToast(localPlayer.muted ? 'Muted' : 'Unmuted');
+      return;
+    }
+
+    if (iframe && (iframe.src.includes('youtube.com') || iframe.src.includes('youtu.be'))) {
+      isYtMuted = !isYtMuted;
+      const cmd = isYtMuted ? 'mute' : 'unMute';
+      iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: cmd, args: []}), '*');
+      updateMediaControlsUI();
+      showToast(isYtMuted ? 'Muted' : 'Unmuted');
     }
   }
 
@@ -3453,18 +3598,18 @@
     let q = getMacroQueue();
     if (q.length === 0) return;
     let curr = getCurrentMacroIndex(q);
-    let next = curr + 1;
-    if (next >= q.length) next = 0; // wrap around
+    let next = (curr + 1) % q.length;
     playMacroItem(next, q, 1);
+    showToast("Next Playlist ⏭");
   }
 
   function goToPreviousMedia() {
     let q = getMacroQueue();
     if (q.length === 0) return;
     let curr = getCurrentMacroIndex(q);
-    let prev = curr - 1;
-    if (prev < 0) prev = q.length - 1; // wrap around
+    let prev = (curr - 1 + q.length) % q.length;
     playMacroItem(prev, q, -1);
+    showToast("⏮ Previous Playlist");
   }
 
   function goToNextItem() {
@@ -3473,20 +3618,27 @@
     let curr = getCurrentMacroIndex(q);
     let item = q[curr];
 
-    if (item.type === 'local') {
+    if (item && item.type === 'local') {
        if (currentMediaIndex < item.items.length - 1) {
            playLocalMedia(currentMediaIndex + 1);
+           showToast("Next Track ▶");
        } else {
            goToNextMedia();
        }
     } else {
        const iframe = document.getElementById('player');
        if (iframe && (iframe.src.includes('youtube.com') || iframe.src.includes('youtu.be'))) {
-           let ytLen = window.ytPlaylistLength || 1;
-           let ytIdx = window.ytPlaylistIndex || 0;
-           if (ytLen > 1 && ytIdx < ytLen - 1) {
-               window.ytPlaylistIndex++; // Optimistically update index
-               iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'nextVideo', args: []}), '*');
+           const hasPlaylist = iframe.src.includes('list=') || (window.ytPlaylistLength && window.ytPlaylistLength > 1);
+           if (hasPlaylist) {
+               if (window.ytPlaylistLength > 1 && window.ytPlaylistIndex >= window.ytPlaylistLength - 1) {
+                   goToNextMedia();
+               } else {
+                   if (window.ytPlaylistIndex !== undefined && window.ytPlaylistIndex >= 0) {
+                       window.ytPlaylistIndex++;
+                   }
+                   iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'nextVideo', args: []}), '*');
+                   showToast("Next Track ▶");
+               }
            } else {
                goToNextMedia();
            }
@@ -3502,21 +3654,31 @@
     let curr = getCurrentMacroIndex(q);
     let item = q[curr];
 
-    if (item.type === 'local') {
+    if (item && item.type === 'local') {
        if (currentMediaIndex > 0) {
            playLocalMedia(currentMediaIndex - 1);
+           showToast("◀ Previous Track");
        } else {
            goToPreviousMedia();
        }
     } else {
        const iframe = document.getElementById('player');
        if (iframe && (iframe.src.includes('youtube.com') || iframe.src.includes('youtu.be'))) {
-           let ytIdx = window.ytPlaylistIndex || 0;
-           if (ytIdx > 0) {
-               window.ytPlaylistIndex--; // Optimistically update index
-               iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'previousVideo', args: []}), '*');
+           const hasPlaylist = iframe.src.includes('list=') || (window.ytPlaylistLength && window.ytPlaylistLength > 1);
+           if (hasPlaylist) {
+               if (window.ytPlaylistIndex === 0) {
+                   goToPreviousMedia();
+               } else {
+                   if (window.ytPlaylistIndex !== undefined && window.ytPlaylistIndex > 0) {
+                       window.ytPlaylistIndex--;
+                   }
+                   iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'previousVideo', args: []}), '*');
+                   showToast("◀ Previous Track");
+               }
            } else {
-               goToPreviousMedia();
+               iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'seekTo', args: [0, true]}), '*');
+               iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'playVideo', args: []}), '*');
+               showToast("Restarted Track");
            }
        } else {
            goToPreviousMedia();
